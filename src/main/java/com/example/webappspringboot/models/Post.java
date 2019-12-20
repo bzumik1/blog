@@ -13,18 +13,23 @@ import java.util.List;
 public class Post {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "title", nullable = false, length = 155)
+
+    @Column(name = "title", nullable = false, length = 200) // length is length of string VARCHAR(200)
     private String title;
 
-    @Lob
-    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
+    @Lob //large object
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT") // columnDefinition for DDL
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
-    private Date upadatedOn;
+    private Date createdOn;
 
-    @OneToMany
+    @Temporal(TemporalType.TIMESTAMP) // it is here to map correctly the Date from java to TIMESTAMP in SQL
+    @Column(name = "updated_on")
+    private Date updatedOn;
+
+    @OneToMany // connect two different tables, ONE item from this table can be connected with MANY from the second one
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
