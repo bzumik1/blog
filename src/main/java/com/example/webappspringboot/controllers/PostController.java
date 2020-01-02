@@ -1,7 +1,6 @@
 package com.example.webappspringboot.controllers;
 
-import com.example.webappspringboot.Exceptions.ResourceNotFoundException;
-import com.example.webappspringboot.models.Comment;
+import com.example.webappspringboot.Exceptions.PostNotFoundException;
 import com.example.webappspringboot.models.Post;
 import com.example.webappspringboot.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +36,20 @@ public class PostController {
     public ResponseEntity<Post> getPostById(@PathVariable Integer id){
         return postService.retrievePostById(id)
                 .map(post -> new ResponseEntity<>(post,HttpStatus.OK))
-                .orElseThrow(() -> new ResourceNotFoundException("No post found with id = "+id));
+                .orElseThrow(() -> new PostNotFoundException("No post found with id = "+id));
                 //is it better than null in responseEntity?
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Post> updatePostById(@PathVariable Integer id,@RequestBody Post post){
-        return postService.updatePostById(id,post)
-                .map(newPost -> new ResponseEntity<>(newPost,HttpStatus.OK))
-                .orElseThrow(()->new ResourceNotFoundException("No post found with id = "+id));
-                //is it better than null in responseEntity?
+    public boolean updatePostById(@PathVariable Integer id,@RequestBody Post post){
+        return postService.updatePostById(id,post);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Post> deletePostById(@PathVariable Integer id){
-        return postService.deletePostById(id)
-                .map(post -> new ResponseEntity<>(post,HttpStatus.OK))
-                .orElseThrow(()->new ResourceNotFoundException("No post found with id = "+id));
-                //is it better than null in responseEntity?
-
+    public boolean deletePostById(@PathVariable Integer id){
+        return postService.deletePostById(id);
     }
 
 

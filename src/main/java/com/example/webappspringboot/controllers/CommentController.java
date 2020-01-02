@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path ="api/posts/{postID}/comments")
+@RequestMapping(path ="api/posts/{postId}/comments")
 public class CommentController {
     private CommentService commentService;
 
@@ -18,7 +18,13 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Comment> createComment(@PathVariable Integer postID, @RequestBody Comment comment){
-        return new ResponseEntity<>(commentService.createNewComment(postID, comment), HttpStatus.CREATED);
+    public ResponseEntity<Comment> createComment(@PathVariable Integer postId, @RequestBody Comment comment){
+        return new ResponseEntity<>(commentService.createComment(postId, comment), HttpStatus.CREATED);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(path = "/{commentId}")
+    public boolean deleteCommentById(@PathVariable Integer postId, @PathVariable Integer commentId){
+        return commentService.deleteCommentById(postId,commentId);
     }
 }
