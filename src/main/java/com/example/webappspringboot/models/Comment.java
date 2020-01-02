@@ -30,4 +30,9 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_on")
     private Date updatedOn;
+
+    //connect to post
+//    @ManyToOne
+//    @Column
+
 }

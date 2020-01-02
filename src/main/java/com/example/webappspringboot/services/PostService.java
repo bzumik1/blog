@@ -1,11 +1,14 @@
 package com.example.webappspringboot.services;
 
+import com.example.webappspringboot.Exceptions.ResourceNotFoundException;
+import com.example.webappspringboot.models.Comment;
 import com.example.webappspringboot.models.Post;
 import com.example.webappspringboot.repositories.PostRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Column;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +35,8 @@ public class PostService {
 
     public Optional<Post> updatePostById(Integer id, Post post){
        post.setId(id); //if I receive body without id
-       return postRepository.findById(id).map(postInDatabase ->Optional.of(postRepository.save(post))).orElseGet(Optional::empty);
+       return postRepository.findById(id)
+               .map(postInDatabase -> postRepository.save(post));
        //is it OK?
     }
 
@@ -45,4 +49,7 @@ public class PostService {
         return postToDelete; //MAYBE I DON'T WANT TO RETURN ANYTHING
         //could it be written better?
     }
+
+
+
 }

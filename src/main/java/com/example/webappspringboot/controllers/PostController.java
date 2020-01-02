@@ -1,6 +1,7 @@
 package com.example.webappspringboot.controllers;
 
 import com.example.webappspringboot.Exceptions.ResourceNotFoundException;
+import com.example.webappspringboot.models.Comment;
 import com.example.webappspringboot.models.Post;
 import com.example.webappspringboot.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,8 @@ public class PostController {
                 .map(post -> new ResponseEntity<>(post,HttpStatus.OK))
                 .orElseThrow(()->new ResourceNotFoundException("No post found with id = "+id));
                 //is it better than null in responseEntity?
+
     }
+
+
 }
