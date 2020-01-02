@@ -3,6 +3,7 @@ package com.example.webappspringboot.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,7 +30,8 @@ public class Post {
     @Column(name = "updated_on")
     private Date updatedOn;
 
-    @OneToMany // connect two different tables, ONE item from this table can be connected with MANY from the second one
+    @OneToMany//(fetch = FetchType.EAGER) // connect two different tables, ONE item from this table can be connected with MANY from the second one
+    //EAGER - fetch the list immediately when the post is called. Don't use when you don't have to
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
